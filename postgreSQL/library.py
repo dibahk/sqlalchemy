@@ -61,27 +61,12 @@ def add_book(title, page_num, first_name, last_name):
         session.add(pairing)
         session.commit()
         print("new pairing added"+str(pairing))
-        
-with Session(engine) as session:
-    # Read
-    smallest_sale_query = select(Sales).order_by(Sales.order_total)
-    smallest_sale = session.execute(smallest_sale_query).scalar()
-    print(smallest_sale.order_total)
 
-    # Insert
-    recent_sale = Sales(order_num=1105910,cust_name='alen',prod_number='ev33',prod_name='bed',quantity=3,price=19.5,discount=0,order_total=58.5)
-    session.add(recent_sale)
-    session.commit()
-
-    # update
-    recent_sale.quantity = 2
-    recent_sale.order_total = 39
-    updated_sale = session.execute(select(Sales).filter(Sales.order_num==1105910)).scalar()
-    print(updated_sale.cust_name)
-    print(updated_sale.quantity)
-    print(updated_sale.order_total)
-
-    # delete
-    returned_sale = session.execute(select(Sales).filter(Sales.order_num ==1105910)).scalar()
-    session.delete(returned_sale)
-    session.commit()
+if __name__=="__main__":
+    print("enter input data for book")
+    title = input("what is the title of the book?")
+    page_num = int(input("what is the number of pages of this book"))
+    first_name = input("what is the first name of the authot of this book")
+    last_name = input("what is the last name of the author of this book")
+    add_book(title, page_num, first_name, last_name)
+    print("Done")
